@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Miro Shuffle Z</title>
+  <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
+</head>
+<body>
+  <h3>Перемешать элементы</h3>
+  <button id="shuffle">Shuffle Layers</button>
+
+  <script>
+    async function shuffleLayers() {
+      const items = await miro.board.get({
+        type: ['shape', 'sticky_note', 'text', 'image']
+      });
+
+      for (const item of items) {
+        if (Math.random() > 0.5) {
+          await item.bringToFront();
+        } else {
+          await item.sendToBack();
+        }
+      }
+      alert('Готово! Элементы перемешаны.');
+    }
+
+    document.getElementById('shuffle').onclick = shuffleLayers;
+  </script>
+</body>
+</html>
